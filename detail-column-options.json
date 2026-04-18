@@ -1,0 +1,15 @@
+[
+  "Transaction Date",
+  "Transaction Reference Number",
+  "ICA Account Number",
+  "Merchant ID",
+  "QRS Merchant Name",
+  "Outlet Name",
+  "Cashier ID",
+  "Amount",
+  "QRT Status",
+  "Payment Status",
+  "URN",
+  "Refund Date & Time",
+  "Refund Status"
+]

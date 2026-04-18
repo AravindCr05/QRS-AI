@@ -1,0 +1,25 @@
+Home
+Setup 
+Operation 
+Reports 
+ramesh
+Welcome to the Dashboard
+
+Statistics for: Saturday, April 18, 2026
+
+Current
+Last 1 Week
+Last 1 Month
+Last 3 Months
+Last 1 Year
+Merchant Onboarded
+POS Category	POS	Merchant
+No records available.
+Payment File By Processing Status
+Processed On	File Status	No of Files
+No records available.
+Rejected Payment Transaction
+Payment Date	No of Reject
+No records available.
+ © 2026 - QRS Version - 3.3.2-7.
+Powered by Ascertain

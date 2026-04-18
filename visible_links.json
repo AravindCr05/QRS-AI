@@ -1,0 +1,170 @@
+[
+  {
+    "text": "Home",
+    "visible": true
+  },
+  {
+    "text": "Setup",
+    "visible": true
+  },
+  {
+    "text": "Merchant Management",
+    "visible": false
+  },
+  {
+    "text": "Holiday Management",
+    "visible": false
+  },
+  {
+    "text": "System Parameter",
+    "visible": false
+  },
+  {
+    "text": "Access Management",
+    "visible": false
+  },
+  {
+    "text": "User Management",
+    "visible": false
+  },
+  {
+    "text": "Operation",
+    "visible": true
+  },
+  {
+    "text": "Retry Payment",
+    "visible": false
+  },
+  {
+    "text": "Reports",
+    "visible": true
+  },
+  {
+    "text": "File Processing",
+    "visible": false
+  },
+  {
+    "text": "User Activity",
+    "visible": false
+  },
+  {
+    "text": "Audit Trail",
+    "visible": false
+  },
+  {
+    "text": "Notification",
+    "visible": false
+  },
+  {
+    "text": "QR Charges Not Exist",
+    "visible": false
+  },
+  {
+    "text": "Unsuccessful QR Charges",
+    "visible": false
+  },
+  {
+    "text": "QR Duplicate Transactions",
+    "visible": false
+  },
+  {
+    "text": "Missed QR Refund Transactions",
+    "visible": false
+  },
+  {
+    "text": "Transaction",
+    "visible": false
+  },
+  {
+    "text": "Payment Transaction",
+    "visible": false
+  },
+  {
+    "text": "QR Transaction",
+    "visible": false
+  },
+  {
+    "text": "Logout",
+    "visible": false
+  },
+  {
+    "text": "Live",
+    "visible": true
+  },
+  {
+    "text": "Review",
+    "visible": true
+  },
+  {
+    "text": "History",
+    "visible": true
+  },
+  {
+    "text": "Corporate",
+    "visible": true
+  },
+  {
+    "text": "POS",
+    "visible": true
+  },
+  {
+    "text": "Merchant",
+    "visible": true
+  },
+  {
+    "text": "174266",
+    "visible": true
+  },
+  {
+    "text": "174265",
+    "visible": true
+  },
+  {
+    "text": "174264",
+    "visible": true
+  },
+  {
+    "text": "174263",
+    "visible": true
+  },
+  {
+    "text": "174262",
+    "visible": true
+  },
+  {
+    "text": "«",
+    "visible": true
+  },
+  {
+    "text": "‹",
+    "visible": true
+  },
+  {
+    "text": "1",
+    "visible": true
+  },
+  {
+    "text": "2",
+    "visible": true
+  },
+  {
+    "text": "3",
+    "visible": true
+  },
+  {
+    "text": "...",
+    "visible": true
+  },
+  {
+    "text": "37",
+    "visible": true
+  },
+  {
+    "text": "›",
+    "visible": true
+  },
+  {
+    "text": "»",
+    "visible": true
+  }
+]

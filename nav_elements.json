@@ -1,0 +1,290 @@
+[
+  {
+    "tag": "A",
+    "text": "Home",
+    "role": null,
+    "className": "nav-link"
+  },
+  {
+    "tag": "A",
+    "text": "Setup",
+    "role": null,
+    "className": "nav-link dropdown-toggle"
+  },
+  {
+    "tag": "A",
+    "text": "Merchant Management",
+    "role": null,
+    "className": "dropdown-item"
+  },
+  {
+    "tag": "A",
+    "text": "Holiday Management",
+    "role": null,
+    "className": "dropdown-item"
+  },
+  {
+    "tag": "A",
+    "text": "System Parameter",
+    "role": null,
+    "className": "dropdown-item"
+  },
+  {
+    "tag": "A",
+    "text": "Access Management",
+    "role": null,
+    "className": "dropdown-item"
+  },
+  {
+    "tag": "A",
+    "text": "User Management",
+    "role": null,
+    "className": "dropdown-item"
+  },
+  {
+    "tag": "A",
+    "text": "Operation",
+    "role": null,
+    "className": "nav-link dropdown-toggle"
+  },
+  {
+    "tag": "A",
+    "text": "Retry Payment",
+    "role": null,
+    "className": "dropdown-item"
+  },
+  {
+    "tag": "A",
+    "text": "Reports",
+    "role": null,
+    "className": "nav-link dropdown-toggle"
+  },
+  {
+    "tag": "A",
+    "text": "File Processing",
+    "role": null,
+    "className": "dropdown-item"
+  },
+  {
+    "tag": "A",
+    "text": "User Activity",
+    "role": null,
+    "className": "dropdown-item"
+  },
+  {
+    "tag": "A",
+    "text": "Audit Trail",
+    "role": null,
+    "className": "dropdown-item"
+  },
+  {
+    "tag": "A",
+    "text": "Notification",
+    "role": null,
+    "className": "dropdown-item dropdown-toggle"
+  },
+  {
+    "tag": "A",
+    "text": "QR Charges Not Exist",
+    "role": null,
+    "className": "dropdown-item"
+  },
+  {
+    "tag": "A",
+    "text": "Unsuccessful QR Charges",
+    "role": null,
+    "className": "dropdown-item"
+  },
+  {
+    "tag": "A",
+    "text": "QR Duplicate Transactions",
+    "role": null,
+    "className": "dropdown-item"
+  },
+  {
+    "tag": "A",
+    "text": "Missed QR Refund Transactions",
+    "role": null,
+    "className": "dropdown-item"
+  },
+  {
+    "tag": "A",
+    "text": "Transaction",
+    "role": null,
+    "className": "dropdown-item dropdown-toggle"
+  },
+  {
+    "tag": "A",
+    "text": "Payment Transaction",
+    "role": null,
+    "className": "dropdown-item"
+  },
+  {
+    "tag": "A",
+    "text": "QR Transaction",
+    "role": null,
+    "className": "dropdown-item"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "ramesh",
+    "role": null,
+    "className": "dropdown-toggle btn"
+  },
+  {
+    "tag": "A",
+    "text": "Logout",
+    "role": null,
+    "className": "dropdown-item"
+  },
+  {
+    "tag": "A",
+    "text": "Setup",
+    "role": null,
+    "className": ""
+  },
+  {
+    "tag": "A",
+    "text": "Live",
+    "role": null,
+    "className": "nav-link active"
+  },
+  {
+    "tag": "A",
+    "text": "Review",
+    "role": null,
+    "className": "nav-link"
+  },
+  {
+    "tag": "A",
+    "text": "History",
+    "role": null,
+    "className": "nav-link"
+  },
+  {
+    "tag": "A",
+    "text": "Corporate",
+    "role": null,
+    "className": "nav-link active"
+  },
+  {
+    "tag": "A",
+    "text": "POS",
+    "role": null,
+    "className": "nav-link"
+  },
+  {
+    "tag": "A",
+    "text": "Merchant",
+    "role": null,
+    "className": "nav-link"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "Search",
+    "role": null,
+    "className": "btn btn-outline-secondary w-100"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "Clear",
+    "role": null,
+    "className": "btn btn-outline-secondary w-100"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "Create Corporate",
+    "role": null,
+    "className": "btn btn-success me-2"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "Export",
+    "role": null,
+    "className": "btn btn-primary"
+  },
+  {
+    "tag": "A",
+    "text": "174266",
+    "role": null,
+    "className": "corporateActivetab"
+  },
+  {
+    "tag": "A",
+    "text": "174265",
+    "role": null,
+    "className": "corporateActivetab"
+  },
+  {
+    "tag": "A",
+    "text": "174264",
+    "role": null,
+    "className": "corporateActivetab"
+  },
+  {
+    "tag": "A",
+    "text": "174263",
+    "role": null,
+    "className": "corporateActivetab"
+  },
+  {
+    "tag": "A",
+    "text": "174262",
+    "role": null,
+    "className": "corporateActivetab"
+  },
+  {
+    "tag": "A",
+    "text": "«",
+    "role": null,
+    "className": "page-link"
+  },
+  {
+    "tag": "A",
+    "text": "‹",
+    "role": null,
+    "className": "page-link"
+  },
+  {
+    "tag": "A",
+    "text": "1",
+    "role": null,
+    "className": "page-link"
+  },
+  {
+    "tag": "A",
+    "text": "2",
+    "role": null,
+    "className": "page-link"
+  },
+  {
+    "tag": "A",
+    "text": "3",
+    "role": null,
+    "className": "page-link"
+  },
+  {
+    "tag": "A",
+    "text": "...",
+    "role": null,
+    "className": "page-link"
+  },
+  {
+    "tag": "A",
+    "text": "37",
+    "role": null,
+    "className": "page-link"
+  },
+  {
+    "tag": "A",
+    "text": "›",
+    "role": null,
+    "className": "page-link"
+  },
+  {
+    "tag": "A",
+    "text": "»",
+    "role": null,
+    "className": "page-link"
+  }
+]

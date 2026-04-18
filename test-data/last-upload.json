@@ -1,0 +1,15 @@
+{
+  "fileName": "ReflexQR_DailyReport_RHBQR170406_18042026_1776515788944.csv",
+  "merchantId": "RHBQR170406",
+  "outletId": "OI1704268",
+  "qrsMerchantName": "QMN1704202608",
+  "icaAccountNumber": "1704202606",
+  "outletName": "ON1704202608",
+  "cashierId": "CI170426102",
+  "transactionCount": 1,
+  "transactionAmount": "2254.49",
+  "transactionReference": "20260418RHBBMYKL01776515789010",
+  "trxReference": "TRXREF5789010",
+  "sourceOfFund": "QR Code",
+  "participant": "RHB Bank Berhad"
+}

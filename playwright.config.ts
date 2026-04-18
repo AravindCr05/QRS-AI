@@ -18,11 +18,14 @@ export default defineConfig({
   use: {
     baseURL: process.env.BASE_URL ?? 'https://192.168.7.35:8072/',
     browserName: 'chromium',
-    headless: true,
+    headless: false,
     ignoreHTTPSErrors: true,
     trace: 'on',
     screenshot: 'only-on-failure',
     video: 'on',
-    viewport: { width: 1440, height: 900 },
+    viewport: null,
+    launchOptions: {
+      args: ['--start-maximized'],
+    },
   },
 });

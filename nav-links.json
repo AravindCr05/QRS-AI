@@ -1,0 +1,142 @@
+[
+  {
+    "text": "Home",
+    "href": "https://192.168.7.35:8072/dashboard",
+    "className": "nav-link"
+  },
+  {
+    "text": "Setup",
+    "href": "https://192.168.7.35:8072/#",
+    "className": "nav-link dropdown-toggle"
+  },
+  {
+    "text": "Merchant Management",
+    "href": "https://192.168.7.35:8072/setup/merchant-setup",
+    "className": "dropdown-item"
+  },
+  {
+    "text": "Holiday Management",
+    "href": "https://192.168.7.35:8072/setup/holiday-management",
+    "className": "dropdown-item"
+  },
+  {
+    "text": "System Parameter",
+    "href": "https://192.168.7.35:8072/setup/system-config",
+    "className": "dropdown-item"
+  },
+  {
+    "text": "Access Management",
+    "href": "https://192.168.7.35:8072/setup/user-group",
+    "className": "dropdown-item"
+  },
+  {
+    "text": "User Management",
+    "href": "https://192.168.7.35:8072/setup/users",
+    "className": "dropdown-item"
+  },
+  {
+    "text": "Operation",
+    "href": "https://192.168.7.35:8072/#",
+    "className": "nav-link dropdown-toggle"
+  },
+  {
+    "text": "Retry Payment",
+    "href": "https://192.168.7.35:8072/operation/retry-payment",
+    "className": "dropdown-item"
+  },
+  {
+    "text": "Reports",
+    "href": "https://192.168.7.35:8072/#",
+    "className": "nav-link dropdown-toggle"
+  },
+  {
+    "text": "File Processing",
+    "href": "https://192.168.7.35:8072/reports/file-processing-report",
+    "className": "dropdown-item"
+  },
+  {
+    "text": "User Activity",
+    "href": "https://192.168.7.35:8072/reports/user-activity-report",
+    "className": "dropdown-item"
+  },
+  {
+    "text": "Audit Trail",
+    "href": "https://192.168.7.35:8072/reports/audit-trail-report",
+    "className": "dropdown-item"
+  },
+  {
+    "text": "Notification",
+    "href": "https://192.168.7.35:8072/#",
+    "className": "dropdown-item dropdown-toggle"
+  },
+  {
+    "text": "QR Charges Not Exist",
+    "href": "https://192.168.7.35:8072/reports/qr-charges-not-exist-report",
+    "className": "dropdown-item"
+  },
+  {
+    "text": "Unsuccessful QR Charges",
+    "href": "https://192.168.7.35:8072/reports/unsuccessful-qr-charges-report",
+    "className": "dropdown-item"
+  },
+  {
+    "text": "QR Duplicate Transactions",
+    "href": "https://192.168.7.35:8072/reports/qr-duplicate-transactions-report",
+    "className": "dropdown-item"
+  },
+  {
+    "text": "Missed QR Refund Transactions",
+    "href": "https://192.168.7.35:8072/reports/missed-qr-refund-transactions-report",
+    "className": "dropdown-item"
+  },
+  {
+    "text": "Transaction",
+    "href": "https://192.168.7.35:8072/#",
+    "className": "dropdown-item dropdown-toggle"
+  },
+  {
+    "text": "Payment Transaction",
+    "href": "https://192.168.7.35:8072/reports/payment-transaction-report",
+    "className": "dropdown-item"
+  },
+  {
+    "text": "QR Transaction",
+    "href": "https://192.168.7.35:8072/reports/qr-transaction-report",
+    "className": "dropdown-item"
+  },
+  {
+    "text": "ramesh",
+    "href": null,
+    "className": "dropdown-toggle btn"
+  },
+  {
+    "text": "Logout",
+    "href": "javascript: void(0);",
+    "className": "dropdown-item"
+  },
+  {
+    "text": "Current",
+    "href": null,
+    "className": "nav-link px-3 py-2 active"
+  },
+  {
+    "text": "Last 1 Week",
+    "href": null,
+    "className": "nav-link px-3 py-2"
+  },
+  {
+    "text": "Last 1 Month",
+    "href": null,
+    "className": "nav-link px-3 py-2"
+  },
+  {
+    "text": "Last 3 Months",
+    "href": null,
+    "className": "nav-link px-3 py-2"
+  },
+  {
+    "text": "Last 1 Year",
+    "href": null,
+    "className": "nav-link px-3 py-2"
+  }
+]

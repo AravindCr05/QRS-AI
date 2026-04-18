@@ -58,52 +58,60 @@ test.describe('QRS Merchant Batch Processing (100 Rows)', () => {
         try {
             await merchantPage.openCreateMerchantForm();
             await merchantPage.createMerchant(record);
-            await expect.soft(merchantPage.successMessage()).toBeVisible({ timeout: 15000 });
+            // Verify specific SUCCESS toast (not just any container)
+            await expect(merchantPage.successMessage()).toBeVisible({ timeout: 15000 });
             createdCount++;
+            await page.waitForTimeout(1000); // Stability pause
         } catch (error) {
             console.error(`[Maker] [${i + 1}/${merchantRecords.length}] FAILED (${record.outletId}):`, error.message);
             await page.screenshot({ path: `test-results/maker-fail-${record.outletId}.png` });
-            // If creation fails, navigate back to Setup to reset state for next row
-            await merchantPage.openMerchantManagement();
+            await merchantPage.openMerchantManagement(); // Reset to list
         }
     }
     
     await merchantPage.logout();
     console.log(`>>> FINISHED BATCH CREATION: ${createdCount}/${merchantRecords.length} Success <<<\n`);
     */
-    let createdCount = 99; // Manually setting for log consistency since last run succeeded.
+    let createdCount = 99; // Assume they exist as per user instructions
 
-    // ── PART 2: CHECKER LOOP (Approve All) ───────────────────────────────────
-    console.log(`>>> STARTING BATCH MERCHANT APPROVAL (Optimized) <<<`);
+    // ── PART 2: TARGETED CHECKER LOOP (Approve pending only) ─────────────────
+    // Read exactly which IDs are still pending from the reconciliation output
+    const fs = require('fs');
+    const path = require('path');
+    const pendingFile = path.join(__dirname, '../test-data/pending-approval.json');
+    const pendingIds: string[] = JSON.parse(fs.readFileSync(pendingFile, 'utf-8'));
+    
+    console.log(`>>> STARTING TARGETED APPROVAL: ${pendingIds.length} merchants pending <<<`);
     await loginAs(page, env.checkerUsername, env.checkerPassword);
     
-    // SETUP TABLE ONCE: 100-per-page + Sorting
     await merchantPage.setupReviewTableBatch();
 
     let approvedCount = 0;
-    for (let i = 0; i < merchantRecords.length; i++) {
-        const record = merchantRecords[i];
-        console.log(`[Checker] [${i + 1}/${merchantRecords.length}] Approving Outlet: ${record.outletId}`);
+    for (let i = 0; i < pendingIds.length; i++) {
+        const outletId = pendingIds[i];
+        console.log(`[Checker] [${i + 1}/${pendingIds.length}] Approving: ${outletId}`);
         
         try {
-            await merchantPage.clickEyeIcon(record.outletId);
+            await merchantPage.clickEyeIcon(outletId);
             await merchantPage.approveButton.click();
-            await expect.soft(merchantPage.successMessage()).toBeVisible({ timeout: 15000 });
+            await expect(merchantPage.successMessage()).toBeVisible({ timeout: 15000 });
             approvedCount++;
+            console.log(`[Checker] [${i + 1}/${pendingIds.length}] ✓ APPROVED: ${outletId}`);
             
-            // QUICK RETURN: Directly to review tab to keep sorting/paging state
             await merchantPage.reviewTab.click();
             await page.waitForTimeout(1000); 
-        } catch (error) {
-            console.error(`[Checker] [${i + 1}/${merchantRecords.length}] FAILED (${record.outletId}):`, error.message);
-            await page.screenshot({ path: `test-results/checker-fail-${record.outletId}.png` });
-            // Recovery: Reset the table if it hangs
-            await merchantPage.setupReviewTableBatch();
+        } catch (error: any) {
+            if (error.message?.includes('not found')) {
+                console.log(`[Checker] [${i + 1}/${pendingIds.length}] SKIPPED (${outletId}): Already moved to Live.`);
+            } else {
+                console.error(`[Checker] [${i + 1}/${pendingIds.length}] FAILED (${outletId}):`, error.message);
+                await page.screenshot({ path: `test-results/checker-fail-${outletId}.png` });
+                await merchantPage.openMerchantManagement();
+                await merchantPage.reviewTab.click();
+            }
         }
     }
     
-    console.log(`>>> BATCH COMPLETE | Created: ${createdCount} | Approved: ${approvedCount} <<<`);
-    
-    console.log(`>>> FINISHED ALL 100 MERCHANT BATCH ACTIONS <<<`);
+    console.log(`>>> TARGETED APPROVAL COMPLETE | Approved: ${approvedCount}/${pendingIds.length} <<<`);
   });
 });
