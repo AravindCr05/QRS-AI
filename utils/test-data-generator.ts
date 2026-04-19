@@ -4,7 +4,13 @@
  */
 export function generateUniqueTestData() {
   const ts = Date.now().toString().slice(-6); // 6-digit suffix
-  const dateStr = new Date().toISOString().split('T')[0].replace(/-/g, '');
+  const now = new Date();
+  const dateStr = now.toISOString().split('T')[0].replace(/-/g, '');
+  const fileDateTag = [
+    String(now.getDate()).padStart(2, '0'),
+    String(now.getMonth() + 1).padStart(2, '0'),
+    now.getFullYear(),
+  ].join('');
   
   // Rules:
   // Corporate ID: Max 6, numeric string (e.g. 6 digits)
@@ -42,6 +48,6 @@ export function generateUniqueTestData() {
     transactionReference: `TRX${dateStr}${ts}`,
     trxReference: `IREF${ts}`,
     transactionAmount: (Math.random() * 500 + 100).toFixed(2),
-    fileName: `Unified_${merchantId}_${dateStr}.csv`
+    fileName: `ReflexQR_DailyReport_${merchantId}_${fileDateTag}.csv`
   };
 }

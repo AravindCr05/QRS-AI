@@ -113,15 +113,54 @@ export class MerchantPage {
     }
 
     // Bank — target specifically by the placeholder 'Search by Bank Name or BIC Code'
+    const escapeRegExp = (value: string) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     const bankSelect = this.page.locator('ng-select[placeholder="Search by Bank Name or BIC Code"]');
-    await bankSelect.getByRole('textbox').click();
-    await this.page.getByRole('option', { name: new RegExp(record.bankName, 'i') }).first().click();
+    const bankInput = bankSelect.getByRole('textbox');
+    await bankInput.click();
+    await bankInput.fill(record.bankName);
+
+    let bankOption = this.page.locator('.ng-dropdown-panel .ng-option, [role="option"]').filter({
+      hasText: new RegExp(escapeRegExp(record.bankName), 'i'),
+    }).first();
+
+    if (!(await bankOption.isVisible({ timeout: 5000 }).catch(() => false))) {
+      const fallbackSearch = record.bankName.split(/\s+/)[0];
+      await bankInput.fill(fallbackSearch);
+      bankOption = this.page.locator('.ng-dropdown-panel .ng-option, [role="option"]').filter({
+        hasText: new RegExp(escapeRegExp(fallbackSearch), 'i'),
+      }).first();
+    }
+
+    await expect(bankOption).toBeVisible({ timeout: 10000 });
+    await bankOption.click();
 
     await this.page.getByRole('textbox', { name: /account name/i }).fill(record.accountName);
     await this.page.getByRole('textbox', { name: /account name/i }).press('Tab');
 
     await this.page.getByRole('textbox', { name: /account number/i }).fill(record.accountNumber);
     await this.page.getByRole('textbox', { name: /account number/i }).press('Tab');
+
+    const selectByOption = async (optionText: RegExp, value: string, label: string) => {
+      console.log(`    [Form] Selecting ${label} -> ${value}`);
+      const dropdown = this.page.locator('select').filter({
+        has: this.page.locator('option', { hasText: optionText }),
+      }).first();
+      await expect(dropdown).toBeVisible({ timeout: 10000 });
+
+      const normalized = value.trim();
+      const escaped = normalized.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const option = dropdown.locator('option').filter({
+        hasText: new RegExp(`^\\s*${escaped}(\\s|-|$)|${escaped}`, 'i'),
+      }).first();
+      const optionLabel = (await option.textContent())?.trim();
+
+      if (optionLabel) {
+        await dropdown.selectOption({ label: optionLabel });
+      } else {
+        await dropdown.selectOption(normalized);
+      }
+      await dropdown.press('Tab');
+    };
 
     // Recipient Info — SAFE DIRECT INJECTION (With Waiting)
     const injectSelect = async (formControlName: string, value: string, label: string) => {
@@ -150,14 +189,12 @@ export class MerchantPage {
         await this.page.waitForTimeout(500);
     };
 
-    // Hide the floating header SAFELY (only for problematic forms)
-    await this.page.evaluate(() => {
-        const header = document.querySelector('app-header, .header-container, nav');
-        if (header) (header as HTMLElement).style.visibility = 'hidden'; 
-    });
+    const recipientIdType = /^brn$/i.test(record.recipientIdType.trim())
+      ? 'Business Registration Number'
+      : record.recipientIdType;
 
-    await injectSelect('inputAccountType', record.paymentType, 'Account Type');
-    await injectSelect('recipientIdType', record.recipientIdType, 'Recipient ID Type');
+    await selectByOption(/Fund Transfer|Credit Card Payment|Loan Payment/i, record.paymentType, 'Account Type');
+    await selectByOption(/New IC|Old IC|Passport No|Business Registration Number/i, recipientIdType, 'Recipient ID Type');
     
     await this.page.getByRole('textbox', { name: /recipient id details/i }).fill(record.recipientIdDetails);
     await this.page.getByRole('textbox', { name: /recipient id details/i }).press('Tab');
@@ -168,9 +205,7 @@ export class MerchantPage {
     await this.page.getByRole('textbox', { name: /recipient email/i }).fill(record.recipientEmail);
     await this.page.getByRole('textbox', { name: /recipient email/i }).press('Tab');
 
-    // Status — use same hybrid logic
-    console.log(`    [Form] Selecting Status...`);
-    await selectDropdown('Status', record.status === 'Inactive' ? 'Inactive' : 'Active', record.status || 'Active');
+    await selectByOption(/Active|Inactive/i, record.status || 'Active', 'Status');
 
     await this.createButton.click();
   }
@@ -199,30 +234,9 @@ export class MerchantPage {
   }
 
   async clickEyeIcon(outletId: string) {
-    console.log(`    [Search] Filtering Review table for Outlet ID: ${outletId}`);
-    
-    // Use the Search Filter boxes rather than pagination
-    const outletIdFilter = this.page.locator('input[placeholder="Enter Outlet ID"]').first();
-    await outletIdFilter.fill(outletId);
-    
-    const searchBtn = this.page.getByRole('button', { name: /Search/i }).first();
-    await searchBtn.click();
-    await this.page.waitForTimeout(3000);
-    
-    const row = this.page.locator('table tbody tr').filter({
-        has: this.page.locator('td', { hasText: new RegExp(`^\\s*${outletId}\\s*$`) })
-    }).first();
-
-    if (!(await row.isVisible())) {
-       // Backup search: sometimes the ID might be in Merchant ID column or combined
-       const fallbackRow = this.page.locator('table tbody tr').filter({ hasText: outletId }).first();
-       if (await fallbackRow.isVisible()) {
-           const eyeIcon = fallbackRow.locator('button.btn-outline-primary').first();
-           await eyeIcon.click();
-           return;
-       }
-       throw new Error(`Outlet ID ${outletId} not found in Review table after filtering.`);
-    }
+    console.log(`    [Search] Finding Review table row for: ${outletId}`);
+    const row = this.page.locator('table tbody tr').filter({ hasText: outletId }).first();
+    await expect(row).toBeVisible({ timeout: 15000 });
 
     const eyeIcon = row.locator('button.btn-outline-primary').first();
     await eyeIcon.scrollIntoViewIfNeeded();

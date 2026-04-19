@@ -1,47 +1,58 @@
 import { test, expect } from '@playwright/test';
+import { LoginPage } from '../pages/login.page';
+import { MerchantPage, MerchantRecord } from '../pages/merchant.page';
 import { env } from '../utils/env';
 
 test('Manual Merchant Creation Path', async ({ page }) => {
-    console.log('>>> LANDING ON LOGIN PAGE');
-    await page.goto(env.baseUrl);
-    
-    // 1. LOGIN (Correct labels)
-    await page.getByPlaceholder(/Enter username/i).fill(env.makerUsername);
-    await page.getByPlaceholder(/Enter password/i).fill(env.makerPassword);
-    await page.getByRole('button', { name: /Log In/i }).click();
-    await page.waitForURL('**/dashboard');
-    console.log('>>> LOGGED IN SUCCESSFULLY');
+  test.setTimeout(240_000);
 
-    // 2. MANUAL NAVIGATION
-    console.log('>>> NAVIGATING: Setup Arrow -> Merchant Management -> Merchant Tab');
-    // Precision click on Arrow (X:260, Y:55 approx)
-    await page.locator('a:has-text("Setup"), a:has-text("󰅀")').first().click();
-    await page.waitForTimeout(1000);
-    
-    await page.getByRole('link', { name: /Merchant Management/i }).click();
-    await page.waitForTimeout(2000);
-    
-    await page.getByRole('listitem').filter({ hasText: /^Merchant$/i }).click();
-    await page.waitForTimeout(1000);
-    
-    await page.getByRole('button', { name: /Create Merchant/i }).click();
-    await page.waitForTimeout(2000);
-    console.log('>>> REACHED MERCHANT FORM');
+  const suffix = Date.now().toString().slice(-6);
+  const record: MerchantRecord = {
+    merchantIdOption: 'RHBQR170406',
+    businessSector: 'Others',
+    otherBusinessSector: 'Automation Test',
+    qrsMerchantName: `QMN${suffix}`,
+    brn: `BRN${suffix}`,
+    outletId: `OI${suffix.padStart(7, '0')}`,
+    outletName: `ON${suffix}`,
+    cashierName: `CN${suffix}`,
+    cashierIds: [`CI${suffix}`],
+    bankName: 'RHB',
+    accountName: `AN${suffix}`,
+    accountNumber: `1704202601${suffix}`,
+    paymentType: '02',
+    recipientIdType: '02',
+    recipientIdDetails: `RI${suffix}`,
+    recipientPhone: '9876789023',
+    recipientEmail: `rec${suffix}@autotest.com`,
+    status: 'Active',
+  };
 
-    // 3. DROPDOWN SELECTION (STRESS TEST)
-    console.log('>>> SELECTING ACCOUNT TYPE: 02 (NON-DEFAULT)');
-    const accType = page.locator('select[formcontrolname="inputAccountType"]');
-    await accType.selectOption('02'); // SHOULD SWITCH TO Savings Account / DuitNow
-    
-    console.log('>>> SELECTING RECIPIENT ID TYPE: 02 (NON-DEFAULT)');
-    const recType = page.locator('select[formcontrolname="recipientIdType"]');
-    await recType.selectOption('02'); // SHOULD SWITCH TO New IC
-    
-    // VISUAL PROOF
-    await page.screenshot({ path: 'final_proof_02.png' });
-    console.log('>>> SCREENSHOT SAVED: final_proof_02.png');
-    
-    // 4. SUBMIT (Minimal fields)
-    console.log('>>> FILLING REMAINING MANDATORY FIELDS...');
-    // ... fill minimal fields to allow 'Create' to be enabled ...
+  const loginPage = new LoginPage(page);
+  const merchantPage = new MerchantPage(page);
+
+  console.log('>>> LANDING ON LOGIN PAGE');
+  await page.goto(env.baseUrl);
+  await loginPage.login(env.makerUsername, env.makerPassword);
+  console.log('>>> LOGGED IN SUCCESSFULLY');
+
+  console.log(`>>> CREATING MERCHANT FOR POS ${record.merchantIdOption}: ${record.outletId}`);
+  await merchantPage.openCreateMerchantForm();
+  await merchantPage.createMerchant(record);
+  console.log('>>> MERCHANT CREATED AND SUBMITTED FOR REVIEW');
+  await merchantPage.logout();
+
+  console.log(`>>> CHECKER APPROVING MERCHANT: ${record.outletId}`);
+  await page.goto(env.baseUrl);
+  await loginPage.login(env.checkerUsername, env.checkerPassword);
+  await merchantPage.openReviewRow(record.outletId);
+  await merchantPage.approveButton.click();
+  await merchantPage.liveTab.click();
+  await page.getByRole('textbox', { name: /^Outlet ID$/i }).fill(record.outletId);
+  await page.getByRole('button', { name: /Search/i }).click();
+  await expect(page.locator('table tbody tr').filter({ hasText: record.outletId }).first()).toBeVisible({
+    timeout: 15000,
+  });
+  await merchantPage.logout();
+  console.log('>>> MERCHANT APPROVED SUCCESSFULLY');
 });

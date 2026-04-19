@@ -19,7 +19,16 @@ import { env } from '../utils/env';
 
 async function loginAs(page: Page, username: string, password: string) {
     const loginPage = new LoginPage(page);
-    await page.goto(env.baseUrl || 'https://192.168.7.35:8072/');
+    const url = env.baseUrl || 'https://192.168.7.35:8072/';
+    try {
+        await page.goto(url, { waitUntil: 'domcontentloaded' });
+    } catch (error: any) {
+        if (!String(error?.message).includes('ERR_ABORTED')) {
+            throw error;
+        }
+        await page.waitForTimeout(1000);
+        await page.goto(url, { waitUntil: 'domcontentloaded' });
+    }
     await loginPage.login(username, password);
 }
 
@@ -65,7 +74,7 @@ test.describe('Integrated Onboarding and QRT Verification', () => {
                 icaAccount: data.icaAccount,
                 channelId: 'QRT',
                 merchantId: data.merchantId,
-                reflexMerchantName: data.qrsMerchantName,
+                reflexMerchantName: data.reflexMerchantName,
                 posPartnerBrn: data.brn,
                 posAccountName: data.posAccountName,
                 posName: data.posName,
@@ -74,9 +83,9 @@ test.describe('Integrated Onboarding and QRT Verification', () => {
                 profitSharingAccount: '12345678',
                 profitSharingRatio: '0',
                 merchantChargesPackage: '0',
-                inputDirectory: 'C:\\test\\in',
-                outputDirectory: 'C:\\test\\out',
-                statementDirectory: 'C:\\test\\stmt',
+                inputDirectory: data.inputDirectory,
+                outputDirectory: data.outputDirectory,
+                statementDirectory: data.statementDirectory,
                 status: 'Active'
             };
             
@@ -133,7 +142,10 @@ test.describe('Integrated Onboarding and QRT Verification', () => {
             await loginAs(page, env.checkerUsername, env.checkerPassword);
             await merchantPage.openReviewRow(data.outletId);
             await merchantPage.approveButton.click();
-            await expect(merchantPage.successMessage()).toBeVisible();
+            await merchantPage.liveTab.click();
+            await page.getByRole('textbox', { name: /^Outlet ID$/i }).fill(data.outletId);
+            await page.getByRole('button', { name: /Search/i }).click();
+            await expect(page.locator('table tbody tr').filter({ hasText: data.outletId }).first()).toBeVisible();
             await merchantPage.logout();
         });
 
